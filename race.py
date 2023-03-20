@@ -12,9 +12,10 @@ locking_map = client.get_map("race-map")
 if locking_map.get(0).result() is None: locking_map.set(0, 0).result()
 
 for _ in range(1000):
-    c = locking_map.get(0).result()
-    sleep(0.01)
-    locking_map.replace_if_same(0, c, c + 1).result()
+    while True:
+        c = locking_map.get(0).result()
+        sleep(0.01)
+        if locking_map.replace_if_same(0, c, c + 1).result(): break
 
 print("c =", locking_map.get(0).result())
 
